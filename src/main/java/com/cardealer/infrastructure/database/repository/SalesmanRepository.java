@@ -1,11 +1,11 @@
 package com.cardealer.infrastructure.database.repository;
 
+import com.cardealer.business.dao.SalesmanDAO;
+import com.cardealer.domain.Salesman;
 import com.cardealer.infrastructure.database.repository.jpa.SalesmanJpaRepository;
 import com.cardealer.infrastructure.database.repository.mapper.SalesmanEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import com.cardealer.business.dao.SalesmanDAO;
-import com.cardealer.domain.Salesman;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,14 +20,11 @@ public class SalesmanRepository implements SalesmanDAO {
 
     @Override
     public List<Salesman> findAvailable() {
-        return salesmanJpaRepository.findAll().stream()
-            .map(salesmanEntityMapper::mapFromEntity)
-            .toList();
+        return salesmanJpaRepository.findAll().stream().map(salesmanEntityMapper::mapFromEntity).toList();
     }
 
     @Override
     public Optional<Salesman> findByPesel(String pesel) {
-        return salesmanJpaRepository.findByPesel(pesel)
-            .map(salesmanEntityMapper::mapFromEntity);
+        return salesmanJpaRepository.findByPesel(pesel).map(salesmanEntityMapper::mapFromEntity);
     }
 }

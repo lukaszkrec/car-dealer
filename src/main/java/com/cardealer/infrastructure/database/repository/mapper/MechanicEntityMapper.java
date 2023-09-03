@@ -1,10 +1,10 @@
 package com.cardealer.infrastructure.database.repository.mapper;
 
+import com.cardealer.domain.Mechanic;
+import com.cardealer.infrastructure.database.entity.MechanicEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
-import com.cardealer.domain.Mechanic;
-import com.cardealer.infrastructure.database.entity.MechanicEntity;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MechanicEntityMapper {

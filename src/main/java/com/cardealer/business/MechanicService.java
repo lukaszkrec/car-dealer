@@ -1,12 +1,12 @@
 package com.cardealer.business;
 
 import com.cardealer.business.dao.MechanicDAO;
+import com.cardealer.domain.Mechanic;
 import com.cardealer.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.cardealer.domain.Mechanic;
 
 import java.util.List;
 import java.util.Optional;

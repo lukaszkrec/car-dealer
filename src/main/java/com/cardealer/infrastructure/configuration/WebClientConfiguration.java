@@ -21,21 +21,13 @@ public class WebClientConfiguration {
 
     @Bean
     public WebClient webClient(ObjectMapper objectMapper) {
-        final var strategies = ExchangeStrategies
-            .builder()
-            .codecs(configurer -> {
-                configurer
-                    .defaultCodecs()
-                    .jackson2JsonEncoder(
-                        new Jackson2JsonEncoder(objectMapper, MediaType.APPLICATION_JSON));
-                configurer
-                    .defaultCodecs()
-                    .jackson2JsonDecoder(
-                        new Jackson2JsonDecoder(objectMapper, MediaType.APPLICATION_JSON));
-            }).build();
-        return WebClient.builder()
-            .exchangeStrategies(strategies)
-            .build();
+        final var strategies = ExchangeStrategies.builder().codecs(configurer -> {
+            configurer.defaultCodecs()
+                    .jackson2JsonEncoder(new Jackson2JsonEncoder(objectMapper, MediaType.APPLICATION_JSON));
+            configurer.defaultCodecs()
+                    .jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper, MediaType.APPLICATION_JSON));
+        }).build();
+        return WebClient.builder().exchangeStrategies(strategies).build();
     }
 
     @Bean

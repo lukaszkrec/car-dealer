@@ -1,11 +1,11 @@
 package com.cardealer.infrastructure.database.repository.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 import com.cardealer.domain.CarServiceRequest;
 import com.cardealer.domain.CarToService;
 import com.cardealer.infrastructure.database.entity.CarServiceRequestEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CarServiceRequestEntityMapper {
@@ -17,10 +17,7 @@ public interface CarServiceRequestEntityMapper {
     CarServiceRequest mapFromEntity(CarServiceRequestEntity entity);
 
     default CarServiceRequest mapFromEntityWithCar(CarServiceRequestEntity entity) {
-        return mapFromEntity(entity)
-            .withCar(CarToService.builder()
-                .vin(entity.getCar().getVin())
-                .build());
+        return mapFromEntity(entity).withCar(CarToService.builder().vin(entity.getCar().getVin()).build());
     }
 
     @Mapping(target = "customer.address", ignore = true)

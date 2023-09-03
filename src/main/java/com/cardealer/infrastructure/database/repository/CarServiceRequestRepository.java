@@ -1,11 +1,12 @@
 package com.cardealer.infrastructure.database.repository;
 
+import com.cardealer.business.dao.CarServiceRequestDAO;
+import com.cardealer.domain.CarServiceRequest;
 import com.cardealer.infrastructure.database.repository.jpa.CarServiceRequestJpaRepository;
 import com.cardealer.infrastructure.database.repository.mapper.CarServiceRequestEntityMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Repository;
-import com.cardealer.business.dao.CarServiceRequestDAO;
-import com.cardealer.domain.CarServiceRequest;
 
 import java.util.List;
 import java.util.Set;
@@ -20,15 +21,17 @@ public class CarServiceRequestRepository implements CarServiceRequestDAO {
 
     @Override
     public List<CarServiceRequest> findAvailable() {
-        return carServiceRequestJpaRepository.findAllByCompletedDateTimeIsNull().stream()
-            .map(carServiceRequestEntityMapper::mapFromEntityWithCar)
-            .toList();
+        return carServiceRequestJpaRepository.findAllByCompletedDateTimeIsNull()
+                .stream()
+                .map(carServiceRequestEntityMapper::mapFromEntityWithCar)
+                .toList();
     }
 
     @Override
     public Set<CarServiceRequest> findActiveServiceRequestsByCarVin(String carVin) {
-        return carServiceRequestJpaRepository.findActiveServiceRequestsByCarVin(carVin).stream()
-            .map(carServiceRequestEntityMapper::mapFromEntity)
-            .collect(Collectors.toSet());
+        return carServiceRequestJpaRepository.findActiveServiceRequestsByCarVin(carVin)
+                .stream()
+                .map(carServiceRequestEntityMapper::mapFromEntity)
+                .collect(Collectors.toSet());
     }
 }

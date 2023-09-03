@@ -26,16 +26,13 @@ public class ServiceController {
 
     @GetMapping(value = SERVICE_NEW)
     public ModelAndView carServicePage() {
-        Map<String, ?> model = Map.of(
-            "carServiceRequestDTO", CarServiceCustomerRequestDTO.buildDefault()
-        );
+        Map<String, ?> model = Map.of("carServiceRequestDTO", CarServiceCustomerRequestDTO.buildDefault());
         return new ModelAndView("car_service_request", model);
     }
 
     @PostMapping(value = SERVICE_REQUEST)
     public String makeServiceRequest(
-        @Valid @ModelAttribute("carServiceRequestDTO") CarServiceCustomerRequestDTO carServiceCustomerRequestDTO
-    ) {
+            @Valid @ModelAttribute("carServiceRequestDTO") CarServiceCustomerRequestDTO carServiceCustomerRequestDTO) {
         CarServiceRequest serviceRequest = carServiceRequestMapper.map(carServiceCustomerRequestDTO);
         carServiceRequestService.makeServiceRequest(serviceRequest);
 

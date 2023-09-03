@@ -16,8 +16,8 @@ public interface OffsetDateTimeMapper {
     @Named("mapOffsetDateTimeToString")
     default String mapOffsetDateTimeToString(OffsetDateTime offsetDateTime) {
         return Optional.ofNullable(offsetDateTime)
-            .map(odt -> offsetDateTime.atZoneSameInstant(ZoneOffset.UTC))
-            .map(odt -> odt.format(DATE_FORMAT))
-            .orElse(null);
+                .map(odt -> offsetDateTime.atZoneSameInstant(ZoneOffset.UTC))
+                .map(odt -> odt.format(DATE_FORMAT))
+                .orElse(null);
     }
 }

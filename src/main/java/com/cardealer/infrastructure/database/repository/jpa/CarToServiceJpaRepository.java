@@ -12,15 +12,13 @@ public interface CarToServiceJpaRepository extends JpaRepository<CarToServiceEnt
 
     Optional<CarToServiceEntity> findOptionalByVin(String vin);
 
-    @EntityGraph(
-        type = EntityGraph.EntityGraphType.FETCH,
-        attributePaths = {
+    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH,
+            attributePaths = {
             "carServiceRequests",
             "carServiceRequests.serviceMechanics",
             "carServiceRequests.serviceMechanics.service",
             "carServiceRequests.serviceParts",
             "carServiceRequests.serviceParts.part"
-        }
-    )
+    })
     CarToServiceEntity findByVin(String vin);
 }

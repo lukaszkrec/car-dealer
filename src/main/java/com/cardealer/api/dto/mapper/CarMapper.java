@@ -1,14 +1,14 @@
 package com.cardealer.api.dto.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import com.cardealer.api.dto.CarHistoryDTO;
 import com.cardealer.api.dto.CarToBuyDTO;
 import com.cardealer.api.dto.CarToServiceDTO;
 import com.cardealer.domain.CarHistory;
 import com.cardealer.domain.CarToBuy;
 import com.cardealer.domain.CarToService;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 import java.util.List;
 
@@ -24,9 +24,7 @@ public interface CarMapper extends OffsetDateTimeMapper {
 
     @SuppressWarnings("unused")
     @Named("mapServiceRequests")
-    default List<CarHistoryDTO.ServiceRequestDTO> mapServiceRequests(
-        List<CarHistory.CarServiceRequest> requests
-    ) {
+    default List<CarHistoryDTO.ServiceRequestDTO> mapServiceRequests(List<CarHistory.CarServiceRequest> requests) {
         return requests.stream().map(this::mapServiceRequest).toList();
     }
 

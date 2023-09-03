@@ -3,16 +3,12 @@ package com.cardealer.api.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.With;
+import lombok.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.util.Optional.*;
+import static java.util.Optional.ofNullable;
 
 @With
 @Data
@@ -41,15 +37,15 @@ public class CarPurchaseDTO {
 
     public static CarPurchaseDTO buildDefaultData() {
         return CarPurchaseDTO.builder()
-            .customerName("Alfred")
-            .customerSurname("Samochodowy")
-            .customerPhone("+48 754 552 234")
-            .customerEmail("alf.samoch@gmail.com")
-            .customerAddressCountry("Polska")
-            .customerAddressCity("Wrocław")
-            .customerAddressPostalCode("50-001")
-            .customerAddressStreet("Bokserska 15")
-            .build();
+                .customerName("Alfred")
+                .customerSurname("Samochodowy")
+                .customerPhone("+48 754 552 234")
+                .customerEmail("alf.samoch@gmail.com")
+                .customerAddressCountry("Polska")
+                .customerAddressCity("Wrocław")
+                .customerAddressPostalCode("50-001")
+                .customerAddressStreet("Bokserska 15")
+                .build();
     }
 
     public Map<String, String> asMap() {

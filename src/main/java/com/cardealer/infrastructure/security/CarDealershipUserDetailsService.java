@@ -30,21 +30,13 @@ public class CarDealershipUserDetailsService implements UserDetailsService {
 
     private List<GrantedAuthority> getUserAuthority(Set<RoleEntity> userRoles) {
         return userRoles.stream()
-            .map(role -> new SimpleGrantedAuthority(role.getRole()))
-            .distinct()
-            .collect(Collectors.toList());
+                .map(role -> new SimpleGrantedAuthority(role.getRole()))
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     private UserDetails buildUserForAuthentication(UserEntity user, List<GrantedAuthority> authorities) {
-        return new User(
-            user.getUserName(),
-            user.getPassword(),
-            user.getActive(),
-            true,
-            true,
-            true,
-            authorities
-        );
+        return new User(user.getUserName(), user.getPassword(), user.getActive(), true, true, true, authorities);
     }
 }
 

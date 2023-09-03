@@ -2,14 +2,14 @@ package com.cardealer.business;
 
 import com.cardealer.business.dao.CarToBuyDAO;
 import com.cardealer.business.dao.CarToServiceDAO;
+import com.cardealer.domain.CarHistory;
+import com.cardealer.domain.CarToBuy;
 import com.cardealer.domain.CarToService;
+import com.cardealer.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.cardealer.domain.CarHistory;
-import com.cardealer.domain.CarToBuy;
-import com.cardealer.domain.exception.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,11 +46,11 @@ public class CarService {
     @Transactional
     public CarToService saveCarToService(CarToBuy carToBuy) {
         CarToService carToService = CarToService.builder()
-            .vin(carToBuy.getVin())
-            .brand(carToBuy.getBrand())
-            .model(carToBuy.getModel())
-            .year(carToBuy.getYear())
-            .build();
+                .vin(carToBuy.getVin())
+                .brand(carToBuy.getBrand())
+                .model(carToBuy.getModel())
+                .year(carToBuy.getYear())
+                .build();
         return carToServiceDAO.saveCarToService(carToService);
     }
 

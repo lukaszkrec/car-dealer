@@ -18,10 +18,7 @@ public class CarHistoryDTO {
     private List<ServiceRequestDTO> carServiceRequests;
 
     public static CarHistoryDTO buildDefault() {
-        return CarHistoryDTO.builder()
-            .carVin("empty")
-            .carServiceRequests(Collections.emptyList())
-            .build();
+        return CarHistoryDTO.builder().carVin("empty").carServiceRequests(Collections.emptyList()).build();
     }
 
     @Data

@@ -25,13 +25,12 @@ public class CepikService {
         List<CepikVehicle> cepikVehicles = cepikVehicleDao.getCepikVehicles(dateFrom, dateTo);
         if (cepikVehicles.isEmpty()) {
             throw new ProcessingException(
-                "CEPIK returned empty list for first registration between: [%s] and: [%s]"
-                    .formatted(dateFrom, dateTo)
-            );
+                    "CEPIK returned empty list for first registration between: [%s] and: [%s]".formatted(dateFrom,
+                            dateTo));
         }
 
         return Optional.ofNullable(cepikVehicles.get(new Random().nextInt(cepikVehicles.size())))
-            .map(anyVehicle -> cepikVehicleDao.getCepikVehicle(anyVehicle.getCepikId()))
-            .orElseThrow(() -> new NotFoundException("Could not find random CEPIK vehicle"));
+                .map(anyVehicle -> cepikVehicleDao.getCepikVehicle(anyVehicle.getCepikId()))
+                .orElseThrow(() -> new NotFoundException("Could not find random CEPIK vehicle"));
     }
 }

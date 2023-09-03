@@ -15,26 +15,19 @@ public class SpringDocConfiguration {
     @Bean
     public GroupedOpenApi groupedOpenApi() {
         return GroupedOpenApi.builder()
-            .group("default")
-            .pathsToMatch("/**")
-            .packagesToScan(CarDealershipApplication.class.getPackageName())
-            .build();
+                .group("default")
+                .pathsToMatch("/**")
+                .packagesToScan(CarDealershipApplication.class.getPackageName())
+                .build();
     }
 
     @Bean
     public OpenAPI springDocOpenApi() {
-        return new OpenAPI()
-            .components(new Components())
-            .info(new Info()
-                .title("Car dealership application")
-                .contact(contact())
-                .version("1.0"));
+        return new OpenAPI().components(new Components())
+                .info(new Info().title("Car dealership application").contact(contact()).version("1.0"));
     }
 
     private Contact contact() {
-        return new Contact()
-            .name("Zajavka")
-            .url("https://zajavka.pl")
-            .email("kontakt@zajavka.pl");
+        return new Contact().name("Zajavka").url("https://zajavka.pl").email("kontakt@zajavka.pl");
     }
 }

@@ -1,11 +1,11 @@
 package com.cardealer.infrastructure.database.repository;
 
+import com.cardealer.business.dao.CarToBuyDAO;
+import com.cardealer.domain.CarToBuy;
 import com.cardealer.infrastructure.database.repository.jpa.CarToBuyJpaRepository;
 import com.cardealer.infrastructure.database.repository.mapper.CarToBuyEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import com.cardealer.business.dao.CarToBuyDAO;
-import com.cardealer.domain.CarToBuy;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,14 +19,11 @@ public class CarToBuyRepository implements CarToBuyDAO {
 
     @Override
     public List<CarToBuy> findAvailable() {
-        return carToBuyJpaRepository.findAvailableCars().stream()
-            .map(carToBuyEntityMapper::mapFromEntity)
-            .toList();
+        return carToBuyJpaRepository.findAvailableCars().stream().map(carToBuyEntityMapper::mapFromEntity).toList();
     }
 
     @Override
     public Optional<CarToBuy> findCarToBuyByVin(String vin) {
-        return carToBuyJpaRepository.findByVin(vin)
-            .map(carToBuyEntityMapper::mapFromEntity);
+        return carToBuyJpaRepository.findByVin(vin).map(carToBuyEntityMapper::mapFromEntity);
     }
 }

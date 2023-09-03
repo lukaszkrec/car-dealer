@@ -1,16 +1,12 @@
 package com.cardealer.business;
 
 import com.cardealer.business.dao.CarServiceRequestDAO;
-import com.cardealer.domain.CarServiceRequest;
-import com.cardealer.domain.CarToService;
-import com.cardealer.domain.Customer;
+import com.cardealer.domain.*;
+import com.cardealer.domain.exception.NotFoundException;
+import com.cardealer.domain.exception.ProcessingException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.cardealer.domain.CarToBuy;
-import com.cardealer.domain.Mechanic;
-import com.cardealer.domain.exception.NotFoundException;
-import com.cardealer.domain.exception.ProcessingException;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -48,7 +44,7 @@ public class CarServiceRequestService {
         validate(request.getCar().getVin());
 
         CarToService car = carService.findCarToService(request.getCar().getVin())
-            .orElse(findInCarToBuyAndSaveInCarToService(request.getCar()));
+                .orElse(findInCarToBuyAndSaveInCarToService(request.getCar()));
         Customer customer = customerService.findCustomer(request.getCustomer().getEmail());
 
         CarServiceRequest carServiceRequest = buildCarServiceRequest(request, car, customer);
@@ -71,10 +67,10 @@ public class CarServiceRequestService {
 
     private void validate(String carVin) {
         Set<CarServiceRequest> serviceRequests = carServiceRequestDAO.findActiveServiceRequestsByCarVin(carVin);
-        if (serviceRequests.size() == 1) {
+        if (serviceRequests.size()
+                == 1) {
             throw new ProcessingException(
-                "There should be only one active service request at a time, car vin: [%s]".formatted(carVin)
-            );
+                    "There should be only one active service request at a time, car vin: [%s]".formatted(carVin));
         }
     }
 
@@ -83,47 +79,40 @@ public class CarServiceRequestService {
         return carService.saveCarToService(carToBuy);
     }
 
-    private CarServiceRequest buildCarServiceRequest(
-        CarServiceRequest request,
-        CarToService car,
-        Customer customer
-    ) {
+    private CarServiceRequest buildCarServiceRequest(CarServiceRequest request, CarToService car, Customer customer) {
         OffsetDateTime when = OffsetDateTime.of(2027, 1, 10, 10, 2, 10, 0, ZoneOffset.UTC);
         return CarServiceRequest.builder()
-            .carServiceRequestNumber(generateCarServiceRequestNumber(when))
-            .receivedDateTime(when)
-            .customerComment(request.getCustomerComment())
-            .customer(customer)
-            .car(car)
-            .build();
+                .carServiceRequestNumber(generateCarServiceRequestNumber(when))
+                .receivedDateTime(when)
+                .customerComment(request.getCustomerComment())
+                .customer(customer)
+                .car(car)
+                .build();
     }
 
     private String generateCarServiceRequestNumber(OffsetDateTime when) {
-        return "%s.%s.%s-%s.%s.%s.%s".formatted(
-            when.getYear(),
-            when.getMonth().ordinal(),
-            when.getDayOfMonth(),
-            when.getHour(),
-            when.getMinute(),
-            when.getSecond(),
-            randomInt(10, 100)
-        );
+        return "%s.%s.%s-%s.%s.%s.%s".formatted(when.getYear(), when.getMonth().ordinal(), when.getDayOfMonth(),
+                when.getHour(), when.getMinute(), when.getSecond(), randomInt(10, 100));
     }
 
     @SuppressWarnings("SameParameterValue")
     private int randomInt(int min, int max) {
-        return new Random().nextInt(max - min) + min;
+        return new Random().nextInt(max
+                - min)
+                + min;
     }
 
     @Transactional
     public CarServiceRequest findAnyActiveServiceRequest(String carVin) {
         Set<CarServiceRequest> serviceRequests = carServiceRequestDAO.findActiveServiceRequestsByCarVin(carVin);
-        if (serviceRequests.size() != 1) {
+        if (serviceRequests.size()
+                != 1) {
             throw new ProcessingException(
-                "There should be only one active service request at a time, car vin: [%s]".formatted(carVin));
+                    "There should be only one active service request at a time, car vin: [%s]".formatted(carVin));
         }
         return serviceRequests.stream()
-            .findAny()
-            .orElseThrow(() -> new NotFoundException("Could not find any service requests, car vin: [%s]".formatted(carVin)));
+                .findAny()
+                .orElseThrow(() -> new NotFoundException(
+                        "Could not find any service requests, car vin: [%s]".formatted(carVin)));
     }
 }

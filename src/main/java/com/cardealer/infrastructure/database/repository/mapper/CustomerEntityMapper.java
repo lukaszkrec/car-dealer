@@ -1,15 +1,15 @@
 package com.cardealer.infrastructure.database.repository.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.ReportingPolicy;
 import com.cardealer.domain.CarServiceRequest;
 import com.cardealer.domain.Customer;
 import com.cardealer.domain.Invoice;
 import com.cardealer.infrastructure.database.entity.CarServiceRequestEntity;
 import com.cardealer.infrastructure.database.entity.CustomerEntity;
 import com.cardealer.infrastructure.database.entity.InvoiceEntity;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.Set;
 import java.util.stream.Collectors;

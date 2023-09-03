@@ -1,8 +1,8 @@
 package com.cardealer.api.dto.mapper;
 
-import org.mapstruct.Mapper;
 import com.cardealer.api.dto.InvoiceDTO;
 import com.cardealer.domain.Invoice;
+import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface InvoiceMapper extends OffsetDateTimeMapper {

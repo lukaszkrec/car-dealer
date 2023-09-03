@@ -28,18 +28,13 @@ public class ServiceRestController {
 
     @PostMapping(value = SERVICE_REQUEST)
     public CarServiceRequestsDTO makeServiceRequest(
-        @Valid @RequestBody CarServiceCustomerRequestDTO carServiceCustomerRequestDTO
-    ) {
+            @Valid @RequestBody CarServiceCustomerRequestDTO carServiceCustomerRequestDTO) {
         CarServiceRequest serviceRequest = carServiceRequestMapper.map(carServiceCustomerRequestDTO);
         carServiceRequestService.makeServiceRequest(serviceRequest);
-        return CarServiceRequestsDTO.builder()
-            .carServiceRequests(getAvailableCarServiceRequests())
-            .build();
+        return CarServiceRequestsDTO.builder().carServiceRequests(getAvailableCarServiceRequests()).build();
     }
 
     private List<CarServiceRequestDTO> getAvailableCarServiceRequests() {
-        return carServiceRequestService.availableServiceRequests().stream()
-            .map(carServiceRequestMapper::map)
-            .toList();
+        return carServiceRequestService.availableServiceRequests().stream().map(carServiceRequestMapper::map).toList();
     }
 }

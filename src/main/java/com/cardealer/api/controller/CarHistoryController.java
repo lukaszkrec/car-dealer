@@ -1,15 +1,15 @@
 package com.cardealer.api.controller;
 
+import com.cardealer.api.dto.CarHistoryDTO;
+import com.cardealer.api.dto.CarToServiceDTO;
 import com.cardealer.api.dto.mapper.CarMapper;
+import com.cardealer.business.CarService;
+import com.cardealer.domain.CarHistory;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.cardealer.api.dto.CarHistoryDTO;
-import com.cardealer.api.dto.CarToServiceDTO;
-import com.cardealer.business.CarService;
-import com.cardealer.domain.CarHistory;
 
 import java.util.Objects;
 
@@ -23,10 +23,7 @@ public class CarHistoryController {
     private final CarMapper carMapper;
 
     @GetMapping(value = CAR_HISTORY)
-    public String carHistory(
-        @RequestParam(value = "carVin", required = false) String carVin,
-        Model model
-    ) {
+    public String carHistory(@RequestParam(value = "carVin", required = false) String carVin, Model model) {
         var allCars = carService.findAllCarsWithHistory().stream().map(carMapper::map).toList();
         var allCarVins = allCars.stream().map(CarToServiceDTO::getVin).toList();
 

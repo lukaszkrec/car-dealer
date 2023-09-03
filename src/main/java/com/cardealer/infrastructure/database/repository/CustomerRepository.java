@@ -1,5 +1,9 @@
 package com.cardealer.infrastructure.database.repository;
 
+import com.cardealer.business.dao.CustomerDAO;
+import com.cardealer.domain.Customer;
+import com.cardealer.infrastructure.database.entity.CarServiceRequestEntity;
+import com.cardealer.infrastructure.database.entity.CustomerEntity;
 import com.cardealer.infrastructure.database.repository.jpa.CarServiceRequestJpaRepository;
 import com.cardealer.infrastructure.database.repository.jpa.CustomerJpaRepository;
 import com.cardealer.infrastructure.database.repository.jpa.InvoiceJpaRepository;
@@ -8,10 +12,6 @@ import com.cardealer.infrastructure.database.repository.mapper.CustomerEntityMap
 import com.cardealer.infrastructure.database.repository.mapper.InvoiceEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import com.cardealer.business.dao.CustomerDAO;
-import com.cardealer.domain.Customer;
-import com.cardealer.infrastructure.database.entity.CarServiceRequestEntity;
-import com.cardealer.infrastructure.database.entity.CustomerEntity;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,8 +33,7 @@ public class CustomerRepository implements CustomerDAO {
 
     @Override
     public Optional<Customer> findByEmail(String email) {
-        return customerJpaRepository.findByEmail(email)
-            .map(customerEntityMapper::mapFromEntity);
+        return customerJpaRepository.findByEmail(email).map(customerEntityMapper::mapFromEntity);
     }
 
     @Override
@@ -42,24 +41,25 @@ public class CustomerRepository implements CustomerDAO {
         CustomerEntity customerToSave = customerEntityMapper.mapToEntity(customer);
         CustomerEntity customerSaved = customerJpaRepository.saveAndFlush(customerToSave);
 
-        customer.getInvoices().stream()
-            .filter(invoice -> Objects.isNull(invoice.getInvoiceId()))
-            .map(invoiceEntityMapper::mapToEntity)
-            .forEach(invoiceEntity -> {
-                invoiceEntity.setCustomer(customerSaved);
-                invoiceJpaRepository.saveAndFlush(invoiceEntity);
-            });
+        customer.getInvoices()
+                .stream()
+                .filter(invoice -> Objects.isNull(invoice.getInvoiceId()))
+                .map(invoiceEntityMapper::mapToEntity)
+                .forEach(invoiceEntity -> {
+                    invoiceEntity.setCustomer(customerSaved);
+                    invoiceJpaRepository.saveAndFlush(invoiceEntity);
+                });
     }
 
     @Override
     public void saveServiceRequest(Customer customer) {
-        List<CarServiceRequestEntity> serviceRequests = customer.getCarServiceRequests().stream()
-            .filter(serviceRequest -> Objects.isNull(serviceRequest.getCarServiceRequestId()))
-            .map(carServiceRequestEntityMapper::mapToEntity)
-            .toList();
+        List<CarServiceRequestEntity> serviceRequests = customer.getCarServiceRequests()
+                .stream()
+                .filter(serviceRequest -> Objects.isNull(serviceRequest.getCarServiceRequestId()))
+                .map(carServiceRequestEntityMapper::mapToEntity)
+                .toList();
 
-        serviceRequests
-            .forEach(request -> request.setCustomer(customerEntityMapper.mapToEntity(customer)));
+        serviceRequests.forEach(request -> request.setCustomer(customerEntityMapper.mapToEntity(customer)));
         carServiceRequestJpaRepository.saveAllAndFlush(serviceRequests);
     }
 

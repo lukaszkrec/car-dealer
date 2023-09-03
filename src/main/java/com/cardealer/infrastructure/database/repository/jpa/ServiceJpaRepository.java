@@ -1,8 +1,8 @@
 package com.cardealer.infrastructure.database.repository.jpa;
 
+import com.cardealer.infrastructure.database.entity.ServiceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.cardealer.infrastructure.database.entity.ServiceEntity;
 
 import java.util.Optional;
 

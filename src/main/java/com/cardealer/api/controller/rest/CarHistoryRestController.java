@@ -24,14 +24,10 @@ public class CarHistoryRestController {
     private final CarMapper carMapper;
 
     @GetMapping(value = CAR_VIN_HISTORY)
-    public ResponseEntity<CarHistoryDTO> carHistory(
-        @PathVariable String carVin
-    ) {
+    public ResponseEntity<CarHistoryDTO> carHistory(@PathVariable String carVin) {
         if (Objects.isNull(carVin)) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity
-            .ok(carMapper.map(carService.findCarHistoryByVin(carVin)));
-
+        return ResponseEntity.ok(carMapper.map(carService.findCarHistoryByVin(carVin)));
     }
 }

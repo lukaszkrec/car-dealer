@@ -22,10 +22,10 @@ public class CarServiceMechanicProcessingUnitDTO {
 
     public static CarServiceMechanicProcessingUnitDTO buildDefault() {
         return CarServiceMechanicProcessingUnitDTO.builder()
-            .partQuantity(9)
-            .hours(1)
-            .mechanicComment("Uff, tough")
-            .done(false)
-            .build();
+                .partQuantity(9)
+                .hours(1)
+                .mechanicComment("Uff, tough")
+                .done(false)
+                .build();
     }
 }

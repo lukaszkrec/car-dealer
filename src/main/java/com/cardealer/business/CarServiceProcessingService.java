@@ -1,15 +1,9 @@
 package com.cardealer.business;
 
 import com.cardealer.business.dao.ServiceRequestProcessingDAO;
-import com.cardealer.domain.CarServiceRequest;
-import com.cardealer.domain.ServicePart;
+import com.cardealer.domain.*;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
-import com.cardealer.domain.CarServiceProcessingRequest;
-import com.cardealer.domain.Mechanic;
-import com.cardealer.domain.Part;
-import com.cardealer.domain.Service;
-import com.cardealer.domain.ServiceMechanic;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -36,7 +30,8 @@ public class CarServiceProcessingService {
         ServiceMechanic serviceMechanic = buildServiceMechanic(request, mechanic, serviceRequest, service);
 
         if (request.getDone()) {
-            serviceRequest = serviceRequest.withCompletedDateTime(OffsetDateTime.of(2029, 3, 2, 10, 9, 12, 0, ZoneOffset.UTC));
+            serviceRequest = serviceRequest.withCompletedDateTime(
+                    OffsetDateTime.of(2029, 3, 2, 10, 9, 12, 0, ZoneOffset.UTC));
         }
 
         if (request.partNotIncluded()) {
@@ -48,30 +43,23 @@ public class CarServiceProcessingService {
         }
     }
 
-    private ServiceMechanic buildServiceMechanic(
-        CarServiceProcessingRequest request,
-        Mechanic mechanic,
-        CarServiceRequest serviceRequest,
-        Service service
-    ) {
+    private ServiceMechanic buildServiceMechanic(CarServiceProcessingRequest request, Mechanic mechanic,
+                                                 CarServiceRequest serviceRequest, Service service) {
         return ServiceMechanic.builder()
-            .hours(request.getHours())
-            .comment(request.getComment())
-            .carServiceRequest(serviceRequest)
-            .mechanic(mechanic)
-            .service(service)
-            .build();
+                .hours(request.getHours())
+                .comment(request.getComment())
+                .carServiceRequest(serviceRequest)
+                .mechanic(mechanic)
+                .service(service)
+                .build();
     }
 
-    private ServicePart buildServicePart(
-        CarServiceProcessingRequest request,
-        CarServiceRequest serviceRequest,
-        Part part
-    ) {
+    private ServicePart buildServicePart(CarServiceProcessingRequest request, CarServiceRequest serviceRequest,
+                                         Part part) {
         return ServicePart.builder()
-            .quantity(request.getPartQuantity())
-            .carServiceRequest(serviceRequest)
-            .part(part)
-            .build();
+                .quantity(request.getPartQuantity())
+                .carServiceRequest(serviceRequest)
+                .part(part)
+                .build();
     }
 }

@@ -6,14 +6,10 @@ import com.cardealer.api.dto.CarServiceRequestsDTO;
 import com.cardealer.api.dto.mapper.CarServiceRequestMapper;
 import com.cardealer.business.CarServiceProcessingService;
 import com.cardealer.business.CarServiceRequestService;
+import com.cardealer.domain.CarServiceProcessingRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.cardealer.domain.CarServiceProcessingRequest;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,22 +33,17 @@ public class MechanicRestController {
 
     @PostMapping(value = MECHANIC_WORK_UNIT)
     public CarServiceRequestsDTO mechanicPerformWorkUnit(
-        @Valid @RequestBody CarServiceMechanicProcessingUnitDTO processingUnitDTO
-    ) {
+            @Valid @RequestBody CarServiceMechanicProcessingUnitDTO processingUnitDTO) {
         CarServiceProcessingRequest request = carServiceRequestMapper.map(processingUnitDTO);
         carServiceProcessingService.process(request);
         return getCarServiceRequestsDTO();
     }
 
     private CarServiceRequestsDTO getCarServiceRequestsDTO() {
-        return CarServiceRequestsDTO.builder()
-            .carServiceRequests(getAvailableCarServiceRequests())
-            .build();
+        return CarServiceRequestsDTO.builder().carServiceRequests(getAvailableCarServiceRequests()).build();
     }
 
     private List<CarServiceRequestDTO> getAvailableCarServiceRequests() {
-        return carServiceRequestService.availableServiceRequests().stream()
-            .map(carServiceRequestMapper::map)
-            .toList();
+        return carServiceRequestService.availableServiceRequests().stream().map(carServiceRequestMapper::map).toList();
     }
 }

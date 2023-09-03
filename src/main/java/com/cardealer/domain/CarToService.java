@@ -1,10 +1,6 @@
 package com.cardealer.domain;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.Value;
-import lombok.With;
+import lombok.*;
 
 import java.util.Objects;
 import java.util.Set;
@@ -25,8 +21,8 @@ public class CarToService {
 
     public boolean shouldExistsInCarToBuy() {
         return Objects.nonNull(vin)
-            && Objects.isNull(brand)
-            && Objects.isNull(model)
-            && Objects.isNull(year);
+                && Objects.isNull(brand)
+                && Objects.isNull(model)
+                && Objects.isNull(year);
     }
 }

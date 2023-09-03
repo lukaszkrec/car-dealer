@@ -22,39 +22,40 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public AuthenticationManager authManager(
-        HttpSecurity http,
-        PasswordEncoder passwordEncoder,
-        UserDetailsService userDetailService
-    )
-        throws Exception {
+    public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder,
+                                             UserDetailsService userDetailService) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
-            .userDetailsService(userDetailService)
-            .passwordEncoder(passwordEncoder)
-            .and()
-            .build();
+                .userDetailsService(userDetailService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .build();
     }
 
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
         http.csrf()
-            .disable()
-            .authorizeHttpRequests()
-            .requestMatchers("/login", "/error", "/images/oh_no.png").permitAll()
-            .requestMatchers("/mechanic/**").hasAnyAuthority("MECHANIC")
-            .requestMatchers("/salesman/**", "/purchase/**", "/service/**").hasAnyAuthority("SALESMAN")
-            .requestMatchers("/", "/car/**", "/images/**").hasAnyAuthority("MECHANIC", "SALESMAN")
-            .requestMatchers("/api/**").hasAnyAuthority("REST_API")
-            .and()
-            .formLogin()
-            .permitAll()
-            .and()
-            .logout()
-            .logoutSuccessUrl("/login")
-            .invalidateHttpSession(true)
-            .deleteCookies("JSESSIONID")
-            .permitAll();
+                .disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/login", "/error", "/images/oh_no.png")
+                .permitAll()
+                .requestMatchers("/mechanic/**")
+                .hasAnyAuthority("MECHANIC")
+                .requestMatchers("/salesman/**", "/purchase/**", "/service/**")
+                .hasAnyAuthority("SALESMAN")
+                .requestMatchers("/", "/car/**", "/images/**")
+                .hasAnyAuthority("MECHANIC", "SALESMAN")
+                .requestMatchers("/api/**")
+                .hasAnyAuthority("REST_API")
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll();
 
         return http.build();
     }
@@ -62,11 +63,7 @@ public class SecurityConfiguration {
     @Bean
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "false")
     SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
-        http.csrf()
-            .disable()
-            .authorizeHttpRequests()
-            .anyRequest()
-            .permitAll();
+        http.csrf().disable().authorizeHttpRequests().anyRequest().permitAll();
 
         return http.build();
     }

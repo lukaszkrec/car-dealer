@@ -30,37 +30,15 @@ public class CepikRestController {
     private final CepikVehicleMapper cepikVehicleMapper;
 
     @Operation(summary = "Get CEPIK random vehicle")
-    @ApiResponses(value = {
-        @ApiResponse(
-            responseCode = "200",
-            description = "CEPIK vehicle found",
-            content = {
-                @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(
-                        implementation = CepikVehicleDTO.class
-                    )
-                )
-            }),
-        @ApiResponse(
-            responseCode = "400",
-            description = "Invalid dates interval supplied",
-            content = @Content),
-        @ApiResponse(
-            responseCode = "404",
-            description = "CEPIK vehicle not found",
-            content = @Content)
-    })
+    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "CEPIK vehicle found", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CepikVehicleDTO.class))}), @ApiResponse(responseCode = "400", description = "Invalid dates interval supplied", content = @Content), @ApiResponse(responseCode = "404", description = "CEPIK vehicle not found", content = @Content)})
     @GetMapping(value = CEPIK_RANDOM)
     public CepikVehicleDTO cepikRandomVehicle(
-        @Parameter(description = "First vehicle registration date interval beginning")
-        @RequestParam(value = "firstRegistrationDateFrom")
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) final LocalDate firstRegistrationDateFrom,
-        @Parameter(description = "First vehicle registration date interval ending")
-        @RequestParam(value = "firstRegistrationDateTo")
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) final LocalDate firstRegistrationDateTo
-    ) {
-        return cepikVehicleMapper
-            .map(cepikService.findRandom(firstRegistrationDateFrom, firstRegistrationDateTo));
+            @Parameter(description = "First vehicle registration date interval beginning")
+            @RequestParam(value = "firstRegistrationDateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            final LocalDate firstRegistrationDateFrom,
+            @Parameter(description = "First vehicle registration date interval ending")
+            @RequestParam(value = "firstRegistrationDateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            final LocalDate firstRegistrationDateTo) {
+        return cepikVehicleMapper.map(cepikService.findRandom(firstRegistrationDateFrom, firstRegistrationDateTo));
     }
 }

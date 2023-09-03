@@ -1,8 +1,8 @@
 package com.cardealer.api.dto.mapper;
 
-import org.mapstruct.Mapper;
 import com.cardealer.api.dto.MechanicDTO;
 import com.cardealer.domain.Mechanic;
+import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface MechanicMapper {
